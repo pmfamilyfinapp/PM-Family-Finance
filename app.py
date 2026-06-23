@@ -44,6 +44,33 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# ===== FAMILY PIN LOGIN =====
+
+CORRECT_PIN = "4444"
+
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+
+if not st.session_state.authenticated:
+
+    st.title("🔐 PM Family Finance")
+
+    pin = st.text_input(
+        "Enter Family PIN",
+        type="password"
+    )
+
+    if st.button("Login"):
+
+        if pin == CORRECT_PIN:
+            st.session_state.authenticated = True
+            st.rerun()
+
+        else:
+            st.error("Invalid PIN")
+
+    st.stop()
+
 st.markdown("""
 <style>
 
@@ -79,6 +106,9 @@ menu = st.sidebar.radio(
         "⚙️ Settings"
     ]
 )
+if st.sidebar.button("🚪 Logout"):
+    st.session_state.authenticated = False
+    st.rerun()
 
 if menu == "🏠 Dashboard":
 
